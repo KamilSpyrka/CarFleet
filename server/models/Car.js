@@ -1,14 +1,32 @@
 module.exports = (sequelize, DataTypes) => {
     const Car = sequelize.define('Car', {
-        producer: DataTypes.STRING,
-        model: DataTypes.STRING,
-        prodDate: DataTypes.DATE,
-        purchaseDate: DataTypes.DATE,
-        mileage: DataTypes.INTEGER,
+        producer: {
+            type: DataTypes.STRING,
+            required: true
+        },
+        model: {
+            type: DataTypes.STRING,
+            required: true
+        },
+        prodDate: {
+            type: DataTypes.DATE,
+            required: true,
+        },
+        purchaseDate: {
+            type: DataTypes.DATE,
+            required: true,
+        },
+        mileage: {
+            type:DataTypes.INTEGER,
+            required: true
+        },
+        UserId: {
+            type: DataTypes.UUID,
+            required: true,
+        }
     })
     Car.associate = function (models) {
         Car.belongsTo(models.User)
     }
-
     return Car
 }

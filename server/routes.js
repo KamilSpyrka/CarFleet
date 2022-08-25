@@ -13,8 +13,8 @@ module.exports = (app) => {
     //Cars
     app.get('/', EnsureAuth,  CarController.allCars)
     app.post('/add', EnsureAuth, CarController.addCar)
-    app.get('/cars/:carID', EnsureAuth,  CarController.showCar)
-    app.put('/cars/:carID', EnsureAuth,  CarController.editCar)
-    app.delete('/cars/carID', EnsureAuth, CarController.deleteCar)
+    app.get('/cars/:carId', EnsureAuth,  CarController.showCar)
+    app.put('/cars/:carId', EnsureAuth,  CarController.editCar)
+    app.delete('/cars/:carId', EnsureAuth, CarController.deleteCar)
 
 }
