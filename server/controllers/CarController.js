@@ -12,7 +12,7 @@ module.exports = {
                 cars = await Car.findAll({
                 where: {
                     UserId: userId,
-                    [Op.or]: ['producent', 'model']
+                    [Op.or]: ['producer', 'model']
                     .map(key => ({[key]: {
                         [Op.like]: `%${search}%`
                     }
@@ -45,6 +45,11 @@ module.exports = {
         try {
             const carData = req.body
             carData.UserId = req.user.id
+
+            const dt = new Date();
+            carData.createdAt = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+            carData.updatedAt = carData.createdAt
+
             if(!req.user.id) {
                 return res.status(204).send({
                     error: 'Error'
@@ -64,7 +69,8 @@ module.exports = {
         const carData = req.body
         const carId = req.params.carId
         const userId = req.user.id
-
+        const dt = new Date();
+        carData.updatedAt = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
         try {
             const car = await Car.update(carData, {
                 where: {

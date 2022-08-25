@@ -3,40 +3,112 @@
         <div class="user">
             <div class="flex">
                 <h1>Your profile</h1>
-                <span class="material-icons logout">logout</span>
+                <span class="material-icons logout" @click="logout">logout</span>
             </div>
-            <h3>Profile ID: 1</h3>
-            <h3>Name: Jan Kowalski</h3>
-            <h3>Email: testemail@gmail.com</h3>
-            <h3>Created at: 25.08.2022</h3>
+            <h4>Profile ID: {{user.id}}</h4>
+            <h4>Name: {{user.firstName}} {{user.lastName}}</h4>
+            <h4>Email: {{user.email}}</h4>
+            <h4>Created at: {{user.createdAt}}</h4>
         </div>
         <div class="flexcol">
             <div class="main">
                 <div class="search">
                     <input type="text" id="search" name ="search" class="btn"
-                    placeholder="Search for car by name"
+                    placeholder="Search for car by producer or model"
                     v-model="search" maxlength="50">
-                    <span class="material-icons add">add</span> 
+                    <span class="material-icons add" @click="add">add</span> 
                 </div>   
             </div>
-            <SingleCar />
-            <SingleCar />
-
+            <div class="wide" v-for="car in cars" :key="car.id">
+                <singleCar :id="car.id"
+                :producer="car.producer" 
+                :model="car.model"
+                :prodDate="car.prodDate" 
+                :purchaseDate="car.purchaseDate"
+                :mileage="car.mileage"
+                :recCreated="car.createdAt"
+                :recUpdated="car.updatedAt" />
+        </div>
         </div>
 
     </div>
 </template>
 
 <script>
+/* eslint-disable */
 import singleCar from '@/components/singleCar'
-import SingleCar from './singleCar.vue';
+import {mapState} from 'vuex'
+import CarService from '@/services/CarService'
+import _ from 'lodash'
+
 export default {
     name: 'carsList',
+
     components: {
     singleCar,
-    SingleCar
-},
+    },
+
+    data () {
+        return {
+            cars: [{
+            }],
+            search: ''
+        }
+    },
+
+    computed: {
+        ...mapState([
+            'isUserLoggedIn',
+            'user'
+        ])
+    },
+
+    mounted () {
+        if (!this.isUserLoggedIn) {
+            this.$router.push({name: 'Login'})
+            return
+        }
+    },
+
+    watch: {
+    search: _.debounce(async function(value) {
+        const route = {
+            name: '/'
+        }
+        if (this.search !== '') {
+            route.query = {
+                search: this.search
+            }
+        }
+        this.$router.push(route)
+    }, 300),
+
+    '$route.query.search': {
+        immediate: true,
+        handler (value) {
+            this.search = value
+        }
+    },
+
+    '$route.query.search': {
+        immediate: true,
+        async handler (value) {
+        this.cars = (await CarService.getCars(value)).data
+        }
+    }
+    },
+    methods: {
+        logout() {
+        this.$store.dispatch('setToken', null)
+        this.$store.dispatch('setUser', null)
+        this.$router.push({name: 'Login'})
+    },
+    add() {
+        this.$router.push({name: 'Add'})
+    }
+    }
 }
+
 </script>
 
 <style scoped>
@@ -56,7 +128,7 @@ export default {
 h1 {
     text-align: center;
 }
-h3 {
+h4 {
     padding: 5px;
 }
 .main {
@@ -104,5 +176,8 @@ h3 {
 }
 .flexcol {
     align-self: flex-start;
+}
+.wide {
+width: 100%;
 }
 </style>

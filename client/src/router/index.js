@@ -12,7 +12,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'cars',
+            name: '/',
             component: carsList
         },
         {
@@ -32,7 +32,7 @@ export default new Router({
         },
         {
             path: '/cars/:carId',
-            name: 'editCar',
+            name: 'car',
             component: editCar
         },
     ]

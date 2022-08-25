@@ -31,7 +31,15 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             required: true 
-        }
+        },
+        createdAt: {
+            type: DataTypes.DATEONLY,
+            required: true,
+        },
+        updatedAt: {
+            type: DataTypes.DATEONLY,
+            required: true,
+        },
     },
     {
         hooks: {

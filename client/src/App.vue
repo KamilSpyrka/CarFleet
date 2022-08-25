@@ -79,7 +79,7 @@ input:focus{
   outline: 1px solid #000;
 }
 ::placeholder {
-  color: #fff;
+  color: #ccc;
 }
 select {
   width: 100%;
@@ -134,5 +134,9 @@ a:visited {
   align-items: flex-start;
   justify-items: flex-start;
 
+}
+.error {
+  color: #b41c1c;
+  text-align: center;
 }
 </style>

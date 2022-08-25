@@ -9,11 +9,19 @@ module.exports = (sequelize, DataTypes) => {
             required: true
         },
         prodDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             required: true,
         },
         purchaseDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
+            required: true,
+        },
+        createdAt: {
+            type: DataTypes.DATEONLY,
+            required: true,
+        },
+        updatedAt: {
+            type: DataTypes.DATEONLY,
             required: true,
         },
         mileage: {

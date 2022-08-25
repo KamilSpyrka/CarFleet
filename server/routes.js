@@ -11,7 +11,7 @@ module.exports = (app) => {
     app.post('/login', AuthController.login)
 
     //Cars
-    app.get('/', EnsureAuth,  CarController.allCars)
+    app.get('/cars', EnsureAuth,  CarController.allCars)
     app.post('/add', EnsureAuth, CarController.addCar)
     app.get('/cars/:carId', EnsureAuth,  CarController.showCar)
     app.put('/cars/:carId', EnsureAuth,  CarController.editCar)

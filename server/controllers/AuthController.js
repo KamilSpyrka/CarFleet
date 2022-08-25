@@ -24,6 +24,10 @@ module.exports = {
       const userJson = user.toJSON()
       delete userJson.password
 
+      const dt = new Date();
+      userJson.createdAt = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+      userJson.updatedAt = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+
       res.cookie('x-access-token',jwtSignUser(userJson), options)
       res.send({
         user: userJson,
