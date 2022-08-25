@@ -1,5 +1,5 @@
 const AuthController = require('./controllers/AuthController')
-const ProductsController = require('./controllers/ProductsController')
+const CarController = require('./controllers/CarController')
 const AuthControllerPolicy = require('./policies/AuthControllerPolicy')
 const EnsureAuth = require('./controllers/EnsureAuth')
 
@@ -11,10 +11,10 @@ module.exports = (app) => {
     app.post('/login', AuthController.login)
 
     //Cars
-    app.get('/', EnsureAuth,  ProductsController.allCars)
-    app.post('/add', EnsureAuth, ProductsController.addCar)
-    app.get('/cars/:carID', EnsureAuth,  ProductsController.showCar)
-    app.put('/cars/:carID', EnsureAuth,  ProductsController.editCar)
-    app.delete('/cars/carID', EnsureAuth, ProductsController.deleteCar)
+    app.get('/', EnsureAuth,  CarController.allCars)
+    app.post('/add', EnsureAuth, CarController.addCar)
+    app.get('/cars/:carID', EnsureAuth,  CarController.showCar)
+    app.put('/cars/:carID', EnsureAuth,  CarController.editCar)
+    app.delete('/cars/carID', EnsureAuth, CarController.deleteCar)
 
 }
