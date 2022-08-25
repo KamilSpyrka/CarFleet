@@ -29,35 +29,36 @@
 import Auth from '@/services/Auth.js'
 
 export default {
-    name: 'registerPage',
-    data () {
-        return {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        error: null
-        }
-    },
-    methods: {
-        async register () {
-            try {
-            const response = await Auth.register({
-                firstName: this.firstName,
-                lastName: this.lastName,
-                email: this.email,
-                password: this.password
-            })
+name: 'registerPage',
+data () {
+    return {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    error: null
+    }
+},
 
-            this.$store.dispatch('setToken',response.data.token)
-            this.$store.dispatch('setUser',response.data.user)
-            this.$router.push({name: '/'})
-            } 
-            catch (error) {
-            this.error = error.response.data.error 
-            }
+methods: {
+    async register () {
+        try {
+            const response = await Auth.register({
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+            password: this.password
+        })
+
+        this.$store.dispatch('setToken',response.data.token)
+        this.$store.dispatch('setUser',response.data.user)
+        this.$router.push({name: '/'})
+        } 
+        catch (error) {
+        this.error = error.response.data.error 
         }
     }
+}
 }
 </script>
 

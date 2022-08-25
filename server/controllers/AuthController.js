@@ -2,7 +2,6 @@ const {User} = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
 
-
 function jwtSignUser (user) {
     const ONE_WEEK = 60 * 60 * 24 * 7
     return jwt.sign(user, config.authentication.jwtSecret,{
@@ -24,6 +23,7 @@ module.exports = {
       const userJson = user.toJSON()
       delete userJson.password
 
+      //Add current date to user
       const dt = new Date();
       userJson.createdAt = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
       userJson.updatedAt = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
@@ -36,7 +36,7 @@ module.exports = {
     }
     catch (err) {
       res.status(400).send({
-          error: 'Validation error, this e-mail might be already in use'
+          error: err.message
       })
     }
   },
@@ -75,7 +75,7 @@ module.exports = {
     } 
     catch (err) {
       res.status(500).send({
-        error: 'An error has occured trying to log in'
+        error: err.message
       })
     }
   },

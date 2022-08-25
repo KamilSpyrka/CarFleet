@@ -1,23 +1,25 @@
 <template>
-  <div class="item" >
-    
-    <div class="content">
-        <div class="flexcol">
-            <div class="data">ID: {{id}}</div>
-            <div class="data">Producent: {{producer}}</div>
-            <div class="data">Model: {{model}}</div>
-            <div class="data">Production Date: {{prodDate}}</div>
-            <div class="data">Date Of Purchase by the company: {{purchaseDate}}</div>
-            <div class="data">Car Mileage (km): {{mileage}}</div>
-            <div class="data">Record Created At: {{recCreated}}</div>
-            <div class="data">Record Updated At: {{recUpdated}}</div>
-        </div>
-      <div class="options">
-        <span class="material-icons delete" @click="deleteCar">delete</span>
-        <span class="material-icons edit" @click="navigateTo({name: 'car', params: { carId: id}})">edit</span>
-      </div>
+<div class="item" >
+  <span class="error" v-if="error">{{error}}</span>
+  <div class="content">
+    <div class="flexcol">
+      <div class="data">ID: {{id}}</div>
+      <div class="data">Producent: {{producer}}</div>
+      <div class="data">Model: {{model}}</div>
+      <div class="data">Production Date: {{prodDate}}</div>
+      <div class="data">Date Of Purchase by the company: {{purchaseDate}}</div>
+      <div class="data">Car Mileage (km): {{mileage}}</div>
+      <div class="data">Record Created At: {{recCreated}}</div>
+      <div class="data">Record Updated At: {{recUpdated}}</div>
     </div>
-  </div>   
+    <div class="options">
+      <span class="material-icons delete"
+      @click="deleteCar">delete</span>
+      <span class="material-icons edit"
+      @click="navigateTo({name: 'car', params: { carId: id}})">edit</span>
+    </div>
+  </div>
+</div>   
 </template>
 
 <script>
@@ -25,43 +27,45 @@ import {mapState} from 'vuex'
 import CarService from '@/services/CarService'
 
 export default {
-  name: 'singleCar',
-  data () {
-    return {
-    }
+name: 'singleCar',
+
+async mounted () {
+  if (!this.isUserLoggedIn) {
+    this.$router.push({name: 'Login'})
+    return
+  }
+},
+
+data () {
+  return {
+  error: null
+  }
+},
+
+props: [
+  'id',
+  'producer',
+  'model',
+  'prodDate',
+  'purchaseDate',
+  'mileage',
+  'recCreated',
+  'recUpdated'
+],
+
+computed: {
+  ...mapState([
+    'isUserLoggedIn',
+  ])
+},
+
+methods: {
+  navigateTo (route) {
+  this.$router.push(route)
   },
-  
-  async mounted () {
-    if (!this.isUserLoggedIn) {
-      this.$router.push({name: 'Login'})
-      return
-    }
-  },
 
-  props: [
-    'id',
-    'producer',
-    'model',
-    'prodDate',
-    'purchaseDate',
-    'mileage',
-    'recCreated',
-    'recUpdated'
-  ],
-
-  computed: {
-    ...mapState([
-      'isUserLoggedIn',
-    ])
-  },
-
-  methods: {
-    navigateTo (route) {
-    this.$router.push(route)
-    },
-
-    async deleteCar () {
-      if(confirm("Are you sure you want to delete?")) {
+  async deleteCar () {
+    if(confirm("Are you sure you want to delete?")) {
       try {
         await CarService.deleteCar(this.id)
         console.log()
@@ -70,12 +74,12 @@ export default {
         
       }
       catch(err) {
-        console.log(err)
+        this.error = err.response.data.error;
       }
-      }
+    }
 
-    },
-  }
+  },
+}
 }
 </script>
 
@@ -96,18 +100,6 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-}
-.item h3 {
-  margin-left: 10px;
-  text-align:start;
-  width: 100%;
-  color: #3C3C3C;  
-}
-.item h4 {
-  padding: 10px;
-  text-align:start;
-  width: 100%;
-  color: #3C3C3C;
 }
 .data {
     padding: 3px;
@@ -131,4 +123,21 @@ span {
 .edit:hover {
   color: #606060;
 }
+@media screen and (max-width: 768px) {
+.content {
+padding: 0;
+width: 100%;
+justify-content:left;
+}
+.item {
+  padding: 15px;
+}
+.options{
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 5px;
+}
+} 
 </style>

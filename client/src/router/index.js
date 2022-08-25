@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 import carsList from '@/components/carsList'
 import loginPage from '@/components/loginPage'
 import registerPage from '@/components/registerPage'

@@ -8,6 +8,8 @@ module.exports = {
             const search = req.query.search
             const { Op } = require('sequelize')
             const userId = req.user.id
+
+            //If user used Search bar
             if (search) {
                 cars = await Car.findAll({
                 where: {
@@ -20,6 +22,7 @@ module.exports = {
                 }
               })
             }
+            //All Cars
             else {
                 cars = await Car.findAll({
                     where: {
@@ -27,16 +30,11 @@ module.exports = {
                     }
                 })
             }
-            if(!cars) {
-                return res.status(401).send({
-                    error: 'Unauthorized'
-                })
-            }
             res.send(cars)
         }
         catch (err) {
             res.status(500).send({
-                error: 'An Error has occured1'
+                error: err.message
             })
         }
     },
@@ -69,6 +67,7 @@ module.exports = {
         const carData = req.body
         const carId = req.params.carId
         const userId = req.user.id
+        //Update Date
         const dt = new Date();
         carData.updatedAt = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
         try {
@@ -109,7 +108,7 @@ module.exports = {
         }
         catch (err) {
             res.status(500).send({
-                error: 'An Error has occured'
+                error: err.message
             })
         }
     },

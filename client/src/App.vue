@@ -75,7 +75,7 @@ input:-webkit-autofill:active {
     -webkit-text-fill-color: #fff!important;
 }
 
-input:focus{
+input:focus {
   outline: 1px solid #000;
 }
 ::placeholder {
@@ -138,5 +138,10 @@ a:visited {
 .error {
   color: #b41c1c;
   text-align: center;
+}
+@media screen and (max-width: 768px) {
+.panel {
+  width:100%;
+} 
 }
 </style>

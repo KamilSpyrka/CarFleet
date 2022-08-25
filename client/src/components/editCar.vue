@@ -10,14 +10,23 @@
                 <h1>Edit Car</h1>
             </div>
             <span class="error" v-if="error">{{error}}</span>
-            <h3>Producer</h3><input type="text" id="producer" name="producer" class="btn" v-model="car.producer" required>
-            <h3>Model</h3><input type="text" id="model" name="model" class="btn" v-model="car.model" required>
-            <h3>Production Date</h3><input type="date" id="prodDate" name="prodDate" class="btn" v-model="car.prodDate" required>
-            <h3>Date of purchase by the company</h3><input type="date" id="purchaseDate" name="purchaseDate" class="btn" v-model="car.purchaseDate" required>
-            <h3>Car Mileage (km)</h3><input type="number" id="mileage" name="mileage" class="btn" v-model="car.mileage" required>
+            <h3>Producer</h3>
+            <input type="text" id="producer" name="producer" class="btn" v-model="car.producer" required>
+
+            <h3>Model</h3>
+            <input type="text" id="model" name="model" class="btn" v-model="car.model" required>
+
+            <h3>Production Date</h3>
+            <input type="date" id="prodDate" name="prodDate" class="btn" v-model="car.prodDate" required>
+
+            <h3>Date of purchase by the company</h3>
+            <input type="date" id="purchaseDate" name="purchaseDate" class="btn" v-model="car.purchaseDate" required>
+
+            <h3>Car Mileage (km)</h3>
+            <input type="number" id="mileage" name="mileage" class="btn" v-model="car.mileage" required>
+
             <input type="submit" class="send" name="add" value="Edit" 
-            @click="edit">
-                
+            @click="edit">  
         </div>
     </div>
 </template>
@@ -26,50 +35,53 @@
 import {mapState} from 'vuex'
 import CarService from '@/services/CarService'
 export default {
-    name: 'editCar',
-    data () {
-    return {
-        car: {
+name: 'editCar',
+data () {
+return {
+    car: {
         producer: null,
         model: null,
         prodDate: null,
         purchaseDate: null,
         mileage: null,
         UserId: null,
-        },
-        error: null,
-        required: (value) => !!value || 'Required.'
-    }
     },
+    error: null,
+    required: (value) => !!value || 'Required.'
+}
+},
 
-    computed: {
+computed: {
     ...mapState([
     'isUserLoggedIn',
     'user'
     ])
-    },
+},
 
-    async mounted () {
+async mounted () {
     if (!this.isUserLoggedIn) {
-    this.$router.push({name: 'Login'})
-    return
+        this.$router.push({name: 'Login'})
+        return
     }
     try {
         const carId = this.$route.params.carId
         this.car = (await CarService.show(carId)).data
     }
     catch (err) {
-        console.log(err)
+        this.error = err.response.data.error
     }
-        
-    },
-    methods: {
+    
+},
+
+methods: {
     async edit () {
         const areAllFilled = Object.keys(this.car).every(key => !!this.car[key])
+
         if (!areAllFilled) {
-        this.error = 'You need to fill in all required fields'
-        return
+            this.error = 'You need to fill in all required fields'
+            return
         }
+
         let today = new Date().toISOString().slice(0, 10)
         if(this.car.prodDate > today || this.car.prodDate<"1900-00-00") {
             this.error = 'Production date cant be in the future, nor before 1900'
@@ -85,14 +97,14 @@ export default {
         }
 
         try{
-        await CarService.edit(this.car)
-        this.$router.push({name: '/'})
+            await CarService.edit(this.car)
+            this.$router.push({name: '/'})
         }
         catch(err) {
-        console.log(err)
+            this.error = err.response.data.error
         }
-    }
-    },  
+}
+},  
 }
 </script>
 

@@ -21,31 +21,32 @@
 import Auth from '@/services/Auth.js'
 
 export default {
-    name: 'loginPage',
-    data () {
-        return {
+name: 'loginPage',
+data () {
+    return {
         email: '',
         password: '',
         error: null
-        }
-    },
-    methods: {
-        async login () {
-            try {
-            const response = await Auth.login({
-                email: this.email,
-                password: this.password
-            })
+    }
+},
 
-            this.$store.dispatch('setToken',response.data.token)
-            this.$store.dispatch('setUser',response.data.user)
-            this.$router.push({name: '/'})
-            } 
-            catch (error) {
-            this.error = error.response.data.error 
-            }
+methods: {
+    async login () {
+        try {
+            const response = await Auth.login({
+            email: this.email,
+            password: this.password
+        })
+
+        this.$store.dispatch('setToken',response.data.token)
+        this.$store.dispatch('setUser',response.data.user)
+        this.$router.push({name: '/'})
+        } 
+        catch (err) {
+        this.error = err.response.data.error 
         }
     }
+}
 }
 </script>
 

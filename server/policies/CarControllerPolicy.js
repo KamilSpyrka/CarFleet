@@ -21,25 +21,25 @@ module.exports = {
         case 'prodDate':
           res.status(400).send({
             error: `Production date cant be in the future, nor before 1900`
-          })
+        })
         break
 
         case 'purchaseDate':
           res.status(400).send({
               error: `Purchase date cant be in the future, nor before 1970`
-          })
+        })
         break
 
         case 'mileage':
           res.status(400).send({
               error: 'Mileage cannot be negative number'
-          })
+        })
         break
 
         default:
           res.status(400).send({
             error: 'Error has occured'
-          })
+        })
       }
     }
     else {
