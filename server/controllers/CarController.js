@@ -27,7 +27,11 @@ module.exports = {
                     }
                 })
             }
-
+            if(!cars) {
+                return res.status(204).send({
+                    error: 'Error'
+                })
+            }
             res.send(cars)
         }
         catch (err) {
@@ -40,7 +44,12 @@ module.exports = {
     async addCar (req, res) {
         try {
             const carData = req.body
-            carData.userid = req.user.id
+            carData.UserId = req.user.id
+            if(!req.user.id) {
+                return res.status(204).send({
+                    error: 'Error'
+                })
+            }
             const car = await Car.create(carData)
             res.send(car)
         }
@@ -52,24 +61,27 @@ module.exports = {
     },
 
     async editCar (req, res) {
-        carData = req.body
-        if (carData.userId == req.user.id)
-        {
-            try {
-                const car = await Car.update(carData, {
-                    where: {id: req.params.carId}
+        const carData = req.body
+        const carId = req.params.carId
+        const userId = req.user.id
+
+        try {
+            const car = await Car.update(carData, {
+                where: {
+                    UserId: userId,
+                    id: carId
+                }
+            })
+            if(!car) {
+                return res.status(204).send({
+                    error: 'Error'
                 })
-                res.send(carData)
             }
-            catch (err) {
-                res.status(500).send({
-                    error: 'An Error has occured'
-                })
-            }
+            res.send(car)
         }
-        else {
-            res.status(401).send({
-                error: 'Unauthorized'
+        catch (err) {
+            res.status(500).send({
+                error: err.message
             })
         }
     },
@@ -82,6 +94,11 @@ module.exports = {
                     id: req.params.carId
                 }
             })
+        if(!car) {
+            return res.status(204).send({
+                error: 'Error'
+            })
+        }
             res.send(car)
         }
         catch (err) {
@@ -93,21 +110,23 @@ module.exports = {
 
     async deleteCar (req, res) {
         try {
-            const {carId} = req.params
+            const carId = req.params.carId
+            console.log(req.user.id)
             const car = await Car.findOne({
                 where:{
                     UserId: req.user.id,
                     id: carId
                 }
             })
+            
             if(!car) {
                 return res.status(204).send({
-                    error: carId
+                    error: 'Error'
                 })
             }
-            if(car.userid == req.user.id)
+            else if(car.UserId == req.user.id)
             {
-                await product.destroy()
+                await car.destroy()
                 res.send(car)
             }
             else {
