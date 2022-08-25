@@ -28,8 +28,8 @@ module.exports = {
                 })
             }
             if(!cars) {
-                return res.status(204).send({
-                    error: 'Error'
+                return res.status(401).send({
+                    error: 'Unauthorized'
                 })
             }
             res.send(cars)
@@ -51,8 +51,8 @@ module.exports = {
             carData.updatedAt = carData.createdAt
 
             if(!req.user.id) {
-                return res.status(204).send({
-                    error: 'Error'
+                return res.status(401).send({
+                    error: 'Unauthorized'
                 })
             }
             const car = await Car.create(carData)
@@ -79,8 +79,8 @@ module.exports = {
                 }
             })
             if(!car) {
-                return res.status(204).send({
-                    error: 'Error'
+                return res.status(401).send({
+                    error: 'Unauthorized'
                 })
             }
             res.send(car)
@@ -101,8 +101,8 @@ module.exports = {
                 }
             })
         if(!car) {
-            return res.status(204).send({
-                error: 'Error'
+            return res.status(401).send({
+                error: 'Unauthorized'
             })
         }
             res.send(car)
@@ -126,8 +126,8 @@ module.exports = {
             })
             
             if(!car) {
-                return res.status(204).send({
-                    error: 'Error'
+                return res.status(401).send({
+                    error: 'Unauthorized'
                 })
             }
             else if(car.UserId == req.user.id)

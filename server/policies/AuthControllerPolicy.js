@@ -2,7 +2,7 @@ const Joi = require('joi')
 const { joiPasswordExtendCore } = require('joi-password');
 const joiPassword = Joi.extend(joiPasswordExtendCore);
 module.exports = {
-  register (req, res, next) {
+  validate (req, res, next) {
     const schema = Joi.object({
         firstName: Joi.string() .required(),
         lastName: Joi.string() .required(),

@@ -7,7 +7,7 @@ const EnsureAuth = require('./controllers/EnsureAuth')
 module.exports = (app) => {
     //Auth
     app.post('/register',
-        AuthControllerPolicy.register,
+        AuthControllerPolicy.validate,
         AuthController.register)
     app.post('/login', AuthController.login)
 
