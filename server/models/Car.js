@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             required: true
         },
         prodDate: {
-            type: DataTypes.DATEONLY,
+            type: DataTypes.INTEGER,
             required: true,
         },
         purchaseDate: {

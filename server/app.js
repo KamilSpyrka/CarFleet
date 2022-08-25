@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 //DB
-sequelize.sync()
+sequelize.sync({force: true})
 .then(() =>{
     app.listen(config.port)
     console.log(`server started on port: ${config.port}`)

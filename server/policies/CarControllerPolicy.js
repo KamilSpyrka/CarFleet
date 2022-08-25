@@ -3,13 +3,13 @@ const Joi = require('joi')
 const dt = new Date();
 dt.setDate(dt.getDate()+1)
 today = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-
+let year = dt.getFullYear();
 module.exports = {
   validate (req, res, next) {
     const schema = Joi.object({
         producer: Joi.string() .required(),
         model: Joi.string() .required(),
-        prodDate: Joi.date() .max(today) .min('1900-01-01').required(),
+        prodDate: Joi.number() .max(year) .min(1900) .required(),
         purchaseDate: Joi.date() .max(today) .min('1970-01-01').required(),
         mileage: Joi.number() .min(0) .required()
     })
@@ -38,7 +38,7 @@ module.exports = {
 
         default:
           res.status(400).send({
-            error: 'Error has occured'
+            error: error
         })
       }
     }
