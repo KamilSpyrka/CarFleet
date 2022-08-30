@@ -11,9 +11,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
 
-//Dates
-dayjs().format();
-
 //Routes
 require("./routes")(app);
 
