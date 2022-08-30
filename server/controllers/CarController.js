@@ -31,7 +31,7 @@ module.exports = {
         });
       }
       res.send({
-        cars: cars
+        cars: cars,
       });
     } catch (err) {
       res.status(500).send({

@@ -6,7 +6,11 @@ const ensureAuth = require("./middleware/ensureAuth");
 
 module.exports = (app) => {
   //Auth
-  app.post("/api/register", authControllerPolicy.validate, authController.register);
+  app.post(
+    "/api/register",
+    authControllerPolicy.validate,
+    authController.register
+  );
   app.post("/api/login", authController.login);
 
   //Cars

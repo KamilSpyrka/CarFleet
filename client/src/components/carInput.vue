@@ -58,7 +58,13 @@
         required
       />
 
-      <input type="submit" class="send" name="add" value="Save" @click="checkInput" />
+      <input
+        type="submit"
+        class="send"
+        name="add"
+        value="Save"
+        @click="checkInput"
+      />
     </div>
   </div>
 </template>
@@ -83,7 +89,7 @@ export default {
   },
   props: {
     method: { type: Function },
-  }, 
+  },
   computed: {
     ...mapState(["isUserLoggedIn", "user", "cars"]),
   },
@@ -93,18 +99,17 @@ export default {
       this.$router.push({ name: "Login" });
       return;
     }
-    if(this.$route.params.carId)
-    {
+    if (this.$route.params.carId) {
       try {
-          const carId = this.$route.params.carId;
-          this.car = (await CarService.show(carId)).data;
-          delete this.car.UserId;
-          delete this.car.id;
-          delete this.car.createdAt;
-          delete this.car.updatedAt;
+        const carId = this.$route.params.carId;
+        this.car = (await CarService.show(carId)).data;
+        delete this.car.UserId;
+        delete this.car.id;
+        delete this.car.createdAt;
+        delete this.car.updatedAt;
       } catch (err) {
-      this.error = err.response.data.error;
-      }       
+        this.error = err.response.data.error;
+      }
     }
   },
 

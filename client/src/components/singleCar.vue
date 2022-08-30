@@ -29,7 +29,7 @@
 <script>
 import { mapState } from "vuex";
 import CarService from "@/services/CarService";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 export default {
   name: "singleCar",
 
@@ -80,8 +80,8 @@ export default {
       }
     },
     date(date) {
-      return dayjs(date)
-    }
+      return dayjs(date);
+    },
   },
 };
 </script>

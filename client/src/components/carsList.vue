@@ -35,7 +35,7 @@
 <script>
 /* eslint-disable */
 import singleCar from "@/components/singleCar";
-import leftMenu from "@/components/leftMenu.vue"
+import leftMenu from "@/components/leftMenu.vue";
 import { mapState } from "vuex";
 import CarService from "@/services/CarService";
 import { debounce } from "lodash";
@@ -44,7 +44,7 @@ export default {
 
   components: {
     singleCar,
-    leftMenu
+    leftMenu,
   },
 
   data() {

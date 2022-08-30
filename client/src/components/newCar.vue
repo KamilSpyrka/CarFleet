@@ -1,11 +1,11 @@
 <template>
   <div>
-    <carInput :method="add"/>
+    <carInput :method="add" />
   </div>
 </template>
 
 <script>
-import carInput from "@/components/carInput.vue"
+import carInput from "@/components/carInput.vue";
 import CarService from "@/services/CarService";
 export default {
   components: { carInput },
@@ -23,4 +23,3 @@ export default {
   },
 };
 </script>
-

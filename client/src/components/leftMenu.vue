@@ -1,38 +1,38 @@
 <template>
-    <div class="user">
-        <div class="flex">
-            <h1>Your profile</h1>
-            <span class="material-icons" @click="logout">logout</span>
-        </div>
-        <h4>Profile ID: {{ user.id }}</h4>
-        <h4>Name: {{ user.firstName }} {{ user.lastName }}</h4>
-        <h4>Email: {{ user.email }}</h4>
-        <h4>Created at: {{ date(user.createdAt) }}</h4>
+  <div class="user">
+    <div class="flex">
+      <h1>Your profile</h1>
+      <span class="material-icons" @click="logout">logout</span>
     </div>
+    <h4>Profile ID: {{ user.id }}</h4>
+    <h4>Name: {{ user.firstName }} {{ user.lastName }}</h4>
+    <h4>Email: {{ user.email }}</h4>
+    <h4>Created at: {{ date(user.createdAt) }}</h4>
+  </div>
 </template>
 
 <script>
-    import { mapState } from "vuex";
-    import dayjs from 'dayjs'
-    export default {
-      name: "leftMenu",
-    
-      computed: {
-        ...mapState(["user",]),
-      },
-    
-      methods: {
-        logout() {
-          this.$store.dispatch("setToken", null);
-          this.$store.dispatch("setUser", null);
-          this.$router.push({ name: "Login" });
-        },
-        date(date) {
-          return dayjs(date)
-        }
-      },
-    };
-    </script>
+import { mapState } from "vuex";
+import dayjs from "dayjs";
+export default {
+  name: "leftMenu",
+
+  computed: {
+    ...mapState(["user"]),
+  },
+
+  methods: {
+    logout() {
+      this.$store.dispatch("setToken", null);
+      this.$store.dispatch("setUser", null);
+      this.$router.push({ name: "Login" });
+    },
+    date(date) {
+      return dayjs(date);
+    },
+  },
+};
+</script>
 
 <style scoped>
 .user {
@@ -84,4 +84,4 @@ h4 {
     transition: 0.3s;
   }
 }
-    </style>
+</style>
