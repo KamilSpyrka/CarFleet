@@ -100,12 +100,15 @@ export default {
       if (!this.firstName) {
         this.errors.firstNameError = "First name is required";
       } else this.errors.firstNameError = null;
+
       if (!this.lastName) {
         this.errors.lastNameError = "Last name is required";
       } else this.errors.lastNameError = null;
+
       if (!this.email) {
         this.errors.emailError = "E-mail is required";
       } else this.errors.emailError = null;
+
       //password validation
       function containsSpecialChars(str) {
         const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;

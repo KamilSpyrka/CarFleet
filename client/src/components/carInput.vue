@@ -146,26 +146,22 @@ export default {
 
       if (!areAllFilled) {
         this.errors.mainError = "You need to fill in all required fields";
-      }
-      else this.errors.mainError = null;
+      } else this.errors.mainError = null;
 
       if (!this.car.producer) {
         this.errors.producerError = "Producer name is required";
-      }
-      else this.errors.producerError = null;
+      } else this.errors.producerError = null;
 
       if (!this.car.model) {
         this.errors.modelError = "Model name is required";
-      }
-      else this.errors.modelError = null;
+      } else this.errors.modelError = null;
 
       let today = new Date().toISOString().slice(0, 10);
       let year = new Date().getFullYear();
       if (this.car.prodDate > year || this.car.prodDate < 1900) {
         this.errors.prodDateError =
           "Production date cant be in the future, nor before 1900";
-      }
-      else this.errors.prodDateError = null;
+      } else this.errors.prodDateError = null;
 
       if (
         this.car.purchaseDate > today ||
@@ -174,15 +170,13 @@ export default {
       ) {
         this.errors.purchaseDateError =
           "Purchase date cant be in the future, nor before 1970";
-      }
-      else this.errors.purchaseDateError = null;
+      } else this.errors.purchaseDateError = null;
 
       if (this.car.mileage < 0 || !this.car.mileage) {
         this.errors.mileageError =
           "You must insert mileage, which can't be negative number";
-      }
-      else this.errors.mileageError = null;
-      
+      } else this.errors.mileageError = null;
+
       const valid = Object.values(this.errors).every((value) => {
         if (value === null) {
           return true;
