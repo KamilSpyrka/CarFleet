@@ -2,7 +2,7 @@ import Api from "@/services/Api";
 
 export default {
   getCars(search) {
-    return Api().get("cars", {
+    return Api().get("api/cars", {
       params: {
         search: search,
       },
@@ -10,18 +10,18 @@ export default {
   },
 
   addCar(car) {
-    return Api().post("add", car);
+    return Api().post("api/add", car);
   },
 
   show(carId) {
-    return Api().get(`cars/${carId}`);
+    return Api().get(`api/cars/${carId}`);
   },
 
   edit(car, carId) {
-    return Api().put(`cars/${carId}`, car);
+    return Api().put(`api/cars/${carId}`, car);
   },
 
   deleteCar(carId) {
-    return Api().delete(`cars/${carId}`);
+    return Api().delete(`api/cars/${carId}`);
   },
 };

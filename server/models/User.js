@@ -35,12 +35,10 @@ module.exports = (sequelize, DataTypes) => {
         required: true,
       },
       createdAt: {
-        type: DataTypes.DATEONLY,
-        required: true,
+        type: DataTypes.DATE,
       },
       updatedAt: {
-        type: DataTypes.DATEONLY,
-        required: true,
+        type: DataTypes.DATE,
       },
     },
     {

@@ -39,7 +39,6 @@ import leftMenu from "@/components/leftMenu.vue"
 import { mapState } from "vuex";
 import CarService from "@/services/CarService";
 import { debounce } from "lodash";
-
 export default {
   name: "carsList",
 
@@ -89,8 +88,7 @@ export default {
       immediate: true,
       async handler(value) {
         const cars = await CarService.getCars(value);
-        this.$store.dispatch("setCars", cars.data);
-        console.log(this.cars)
+        this.$store.dispatch("setCars", cars.data.cars);
       },
     },
   },

@@ -8,11 +8,11 @@
         <div class="data">Model: {{ model }}</div>
         <div class="data">Production Date: {{ prodDate }}</div>
         <div class="data">
-          Date Of Purchase by the company: {{ purchaseDate }}
+          Date Of Purchase by the company: {{ date(purchaseDate) }}
         </div>
         <div class="data">Car Mileage (km): {{ mileage }}</div>
-        <div class="data">Record Created At: {{ recCreated }}</div>
-        <div class="data">Record Updated At: {{ recUpdated }}</div>
+        <div class="data">Record Created At: {{ date(recCreated) }}</div>
+        <div class="data">Record Updated At: {{ date(recUpdated) }}</div>
       </div>
       <div class="options">
         <span class="material-icons delete" @click="deleteCar">delete</span>
@@ -29,7 +29,7 @@
 <script>
 import { mapState } from "vuex";
 import CarService from "@/services/CarService";
-
+import dayjs from 'dayjs';
 export default {
   name: "singleCar",
 
@@ -79,6 +79,9 @@ export default {
         }
       }
     },
+    date(date) {
+      return dayjs(date)
+    }
   },
 };
 </script>

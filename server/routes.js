@@ -1,29 +1,29 @@
-const AuthController = require("./controllers/AuthController");
-const CarController = require("./controllers/CarController");
-const AuthControllerPolicy = require("./policies/AuthControllerPolicy");
-const CarControllerPolicy = require("./policies/CarControllerPolicy");
-const EnsureAuth = require("./middleware/EnsureAuth");
+const authController = require("./controllers/authController");
+const carController = require("./controllers/carController");
+const authControllerPolicy = require("./policies/authControllerPolicy");
+const carControllerPolicy = require("./policies/carControllerPolicy");
+const ensureAuth = require("./middleware/ensureAuth");
 
 module.exports = (app) => {
   //Auth
-  app.post("/register", AuthControllerPolicy.validate, AuthController.register);
-  app.post("/login", AuthController.login);
+  app.post("/api/register", authControllerPolicy.validate, authController.register);
+  app.post("/api/login", authController.login);
 
   //Cars
-  app.get("/cars", EnsureAuth, CarController.allCars);
-  app.get("/cars/:carId", EnsureAuth, CarController.showCar);
-  app.delete("/cars/:carId", EnsureAuth, CarController.deleteCar);
+  app.get("/api/cars", ensureAuth, carController.allCars);
+  app.get("/api/cars/:carId", ensureAuth, carController.showCar);
+  app.delete("/api/cars/:carId", ensureAuth, carController.deleteCar);
 
   app.post(
-    "/add",
-    EnsureAuth,
-    CarControllerPolicy.validate,
-    CarController.addCar
+    "/api/add",
+    ensureAuth,
+    carControllerPolicy.validate,
+    carController.addCar
   );
   app.put(
-    "/cars/:carId",
-    EnsureAuth,
-    CarControllerPolicy.validate,
-    CarController.editCar
+    "/api/cars/:carId",
+    ensureAuth,
+    carControllerPolicy.validate,
+    carController.editCar
   );
 };

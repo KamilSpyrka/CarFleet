@@ -7,13 +7,13 @@
         <h4>Profile ID: {{ user.id }}</h4>
         <h4>Name: {{ user.firstName }} {{ user.lastName }}</h4>
         <h4>Email: {{ user.email }}</h4>
-        <h4>Created at: {{ user.createdAt }}</h4>
+        <h4>Created at: {{ date(user.createdAt) }}</h4>
     </div>
 </template>
 
 <script>
     import { mapState } from "vuex";
-    
+    import dayjs from 'dayjs'
     export default {
       name: "leftMenu",
     
@@ -27,6 +27,9 @@
           this.$store.dispatch("setUser", null);
           this.$router.push({ name: "Login" });
         },
+        date(date) {
+          return dayjs(date)
+        }
       },
     };
     </script>

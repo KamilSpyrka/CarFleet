@@ -31,7 +31,7 @@ module.exports = {
         });
       }
       res.send({
-        cars: cars.toJSON()
+        cars: cars
       });
     } catch (err) {
       res.status(500).send({
@@ -44,11 +44,6 @@ module.exports = {
     try {
       const carData = req.body;
       carData.UserId = req.user.id;
-
-      const dt = new Date();
-      carData.createdAt =
-        dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-      carData.updatedAt = carData.createdAt;
 
       if (!req.user.id) {
         return res.status(401).send({
@@ -68,10 +63,7 @@ module.exports = {
     const carData = req.body;
     const carId = req.params.carId;
     const userId = req.user.id;
-    //Update Date
-    const dt = new Date();
-    carData.updatedAt =
-      dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+
     try {
       const car = await Car.update(carData, {
         where: {
@@ -130,7 +122,7 @@ module.exports = {
         });
       } else if (car.UserId == req.user.id) {
         await car.destroy();
-        res.send(car);
+        res.status(204);
       } else {
         res.status(404).send({
           error: err.message,

@@ -13,16 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       required: true,
     },
     purchaseDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       required: true,
     },
     createdAt: {
-      type: DataTypes.DATEONLY,
-      required: true,
+      type: DataTypes.DATE,
     },
     updatedAt: {
-      type: DataTypes.DATEONLY,
-      required: true,
+      type: DataTypes.DATE,
     },
     mileage: {
       type: DataTypes.INTEGER,
