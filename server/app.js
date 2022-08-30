@@ -4,8 +4,6 @@ const cors = require("cors");
 const { sequelize } = require("./models");
 const config = require("./config/config");
 const cookieParser = require("cookie-parser");
-const dayjs = require("dayjs");
-var customParseFormat = require("dayjs/plugin/customParseFormat");
 
 //App
 const app = express();
