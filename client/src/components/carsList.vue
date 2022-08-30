@@ -38,7 +38,7 @@
 import singleCar from '@/components/singleCar'
 import {mapState} from 'vuex'
 import CarService from '@/services/CarService'
-import _ from 'lodash'
+import { debounce } from "lodash"
 
 export default {
 name: 'carsList',
