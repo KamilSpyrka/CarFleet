@@ -2,7 +2,7 @@
   <div class="container">
     <div class="panel">
       <h1>Register now</h1>
-      <span class="error" v-if="error">{{ error }}</span>
+      <span class="error" v-if="errors.mainError">{{ error }}</span>
       <div id="name">
         <input
           type="text"
@@ -13,6 +13,7 @@
           v-model="firstName"
           required
         />
+        
 
         <input
           type="text"
@@ -24,6 +25,8 @@
           required
         />
       </div>
+      <span class="error" v-if="errors.firstNameError">{{ errors.firstNameError }}</span>
+      <span class="error" v-if="errors.lastNameError">{{ errors.lastNameError }}</span>
 
       <input
         type="text"
@@ -35,6 +38,7 @@
         v-model="email"
         required
       />
+      <span class="error" v-if="errors.emailError">{{ errors.emailError }}</span>
 
       <input
         type="password"
@@ -46,6 +50,7 @@
         v-model="password"
         required
       />
+      <span class="error" v-if="errors.passwordError">{{ errors.passwordError }}</span>
 
       <input
         type="submit"
@@ -61,6 +66,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
 import Auth from "@/services/Auth.js";
 
 export default {
@@ -71,12 +77,42 @@ export default {
       lastName: "",
       email: "",
       password: "",
-      error: null,
+      errors: {
+      mainError: null,
+      firstNameError: null,
+      lastNameError: null,
+      emailError: null,
+      passwordError: null,
+      },
     };
   },
 
   methods: {
     async register() {
+      //validate
+      if (!this.firstName) {
+        this.errors.firstNameError = "First name is required"
+      }
+      if (!this.lastName) {
+        this.errors.lastNameError = "Last name is required"
+      }
+      if (!this.email ) {
+        this.errors.emailError = "E-mail is required"
+      }
+      //password validation
+      function containsSpecialChars(str) {
+        const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+        return specialChars.test(str);
+      }
+      function hasNumber(myString) {
+        return /\d/.test(myString);
+      }
+      if (!this.password || !containsSpecialChars(this.password) || !hasNumber(this.password) || this.password.length < 6) {
+        this.errors.passwordError = "Password should be at least 6 characters long, contain 1 number and 1 special sign"
+      }
+      
+      if(this.errors) return
+      this.method(this.car);
       try {
         const response = await Auth.register({
           firstName: this.firstName,
@@ -106,5 +142,9 @@ h1 {
 }
 #name input {
   width: 48%;
+}
+.error {
+  align-self: center;
+  justify-self: center;
 }
 </style>

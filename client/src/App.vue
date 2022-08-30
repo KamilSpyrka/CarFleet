@@ -136,7 +136,8 @@ a:visited {
   justify-items: flex-start;
 }
 .error {
-  color: #b41c1c;
+  margin-bottom: 5px;
+  color: #cf1212;
   text-align: center;
 }
 @media screen and (max-width: 768px) {

@@ -8,7 +8,7 @@
         <div class="data">Model: {{ model }}</div>
         <div class="data">Production Date: {{ prodDate }}</div>
         <div class="data">
-          Date Of Purchase by the company: {{ date(purchaseDate) }}
+          Date Of Purchase By The Company: {{ purchaseDate }}
         </div>
         <div class="data">Car Mileage (km): {{ mileage }}</div>
         <div class="data">Record Created At: {{ date(recCreated) }}</div>

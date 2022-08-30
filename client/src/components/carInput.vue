@@ -7,7 +7,7 @@
         </router-link>
         <h1>Your Car</h1>
       </div>
-      <span class="error" v-if="error">{{ error }}</span>
+      <span class="error" v-if="errors.ServerError">{{ errors.mainError }}</span>
       <h3>Producer</h3>
       <input
         type="text"
@@ -17,6 +17,7 @@
         v-model="car.producer"
         required
       />
+      <span class="error" v-if="errors.producerError">{{ errors.producerError }}</span>
 
       <h3>Model</h3>
       <input
@@ -27,6 +28,7 @@
         v-model="car.model"
         required
       />
+      <span class="error" v-if="errors.modelError">{{ errors.modelError }}</span>
 
       <h3>Production Date</h3>
       <input
@@ -37,6 +39,7 @@
         v-model="car.prodDate"
         required
       />
+      <span class="error" v-if="errors.prodDateError">{{ errors.prodDateError }}</span>
 
       <h3>Date of purchase by the company</h3>
       <input
@@ -47,6 +50,7 @@
         v-model="car.purchaseDate"
         required
       />
+      <span class="error" v-if="errors.purchaseDateError">{{ errors.purchaseDateError }}</span>
 
       <h3>Car Mileage (km)</h3>
       <input
@@ -57,6 +61,7 @@
         v-model="car.mileage"
         required
       />
+      <span class="error" v-if="errors.mileageError">{{ errors.mileageError }}</span>
 
       <input
         type="submit"
@@ -83,7 +88,15 @@ export default {
         purchaseDate: null,
         mileage: null,
       },
-      error: null,
+      errors: {
+      mainError: null,
+      producerError: null,
+      modelError: null,
+      prodDateError: null,
+      purchaseDateError: null,
+      mileageError: null,
+      },
+
       required: (value) => !!value || "Required.",
     };
   },
@@ -120,29 +133,36 @@ export default {
       );
 
       if (!areAllFilled) {
-        this.error = "You need to fill in all required fields";
-        return;
+        this.errors.mainError = "You need to fill in all required fields";
       }
-
+      if (!this.car.producer) {
+        this.errors.producerError = "Producer name is required"
+      }
+      if (!this.car.model) {
+        this.errors.modelError = "Model name is required"
+      }
       let today = new Date().toISOString().slice(0, 10);
       let year = new Date().getFullYear();
       if (this.car.prodDate > year || this.car.prodDate < 1900) {
-        this.error = "Production date cant be in the future, nor before 1900";
-        return;
+        this.errors.prodDateError = "Production date cant be in the future, nor before 1900";
       }
       if (
         this.car.purchaseDate > today ||
-        this.car.purchaseDate < "1970-00-00"
+        this.car.purchaseDate < "1970-00-00" ||
+        !this.car.purchaseDate
       ) {
-        this.error = "Purchase date cant be in the future, nor before 1970";
-        return;
+        this.errors.purchaseDateError = "Purchase date cant be in the future, nor before 1970";
       }
-      if (this.car.mileage < 0) {
-        this.error = "Mileage cannot be negative number";
-        return;
+      if (this.car.mileage < 0 || !this.car.mileage) {
+        this.errors.mileageError = "You must insert mileage, which can't be negative number";
       }
+      if(!this.errors.mainError){
+        console.log(this.errors);
+      }
+
       this.method(this.car);
     },
+    
   },
 };
 </script>
