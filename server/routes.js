@@ -2,7 +2,7 @@ const AuthController = require("./controllers/AuthController");
 const CarController = require("./controllers/CarController");
 const AuthControllerPolicy = require("./policies/AuthControllerPolicy");
 const CarControllerPolicy = require("./policies/CarControllerPolicy");
-const EnsureAuth = require("./controllers/EnsureAuth");
+const EnsureAuth = require("./middleware/EnsureAuth");
 
 module.exports = (app) => {
   //Auth

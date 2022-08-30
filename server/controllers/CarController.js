@@ -30,7 +30,9 @@ module.exports = {
           },
         });
       }
-      res.send(cars);
+      res.send({
+        cars: cars.toJSON()
+      });
     } catch (err) {
       res.status(500).send({
         error: err.message,
@@ -78,8 +80,8 @@ module.exports = {
         },
       });
       if (!car) {
-        return res.status(401).send({
-          error: "Unauthorized",
+        return res.status(404).send({
+          error: err.message,
         });
       }
       res.send(car);
@@ -99,8 +101,8 @@ module.exports = {
         },
       });
       if (!car) {
-        return res.status(401).send({
-          error: "Unauthorized",
+        return res.status(404).send({
+          error: err.message,
         });
       }
       res.send(car);
@@ -123,15 +125,15 @@ module.exports = {
       });
 
       if (!car) {
-        return res.status(401).send({
-          error: "Unauthorized",
+        return res.status(404).send({
+          error: err.message,
         });
       } else if (car.UserId == req.user.id) {
         await car.destroy();
         res.send(car);
       } else {
-        res.status(401).send({
-          error: "Unauthorized",
+        res.status(404).send({
+          error: err.message,
         });
       }
     } catch (err) {

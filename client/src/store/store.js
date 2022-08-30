@@ -11,6 +11,7 @@ export default new Vuex.Store({
     token: null,
     user: null,
     isUserLoggedIn: false,
+    cars: null
   },
 
   mutations: {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
     },
+    setCars(state, cars) {
+      state.cars = cars
+    }
   },
 
   actions: {
@@ -30,6 +34,9 @@ export default new Vuex.Store({
     },
     setUser({ commit }, user) {
       commit("setUser", user);
+    },
+    setCars({ commit }, cars) {
+      commit("setCars", cars);
     },
   },
 });

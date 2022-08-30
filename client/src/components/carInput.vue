@@ -87,7 +87,7 @@ import CarService from "@/services/CarService";
     }, 
 
     computed: {
-      ...mapState(["isUserLoggedIn", "user"]),
+      ...mapState(["isUserLoggedIn", "user", "cars"]),
     },
   
     async mounted() {

@@ -1,15 +1,6 @@
 <template>
   <div class="container">
-    <div class="user">
-      <div class="flex">
-        <h1>Your profile</h1>
-        <span class="material-icons" @click="logout">logout</span>
-      </div>
-      <h4>Profile ID: {{ user.id }}</h4>
-      <h4>Name: {{ user.firstName }} {{ user.lastName }}</h4>
-      <h4>Email: {{ user.email }}</h4>
-      <h4>Created at: {{ user.createdAt }}</h4>
-    </div>
+    <leftMenu />
     <div class="flexcol">
       <div class="main">
         <div class="search">
@@ -44,6 +35,7 @@
 <script>
 /* eslint-disable */
 import singleCar from "@/components/singleCar";
+import leftMenu from "@/components/leftMenu.vue"
 import { mapState } from "vuex";
 import CarService from "@/services/CarService";
 import { debounce } from "lodash";
@@ -53,17 +45,17 @@ export default {
 
   components: {
     singleCar,
+    leftMenu
   },
 
   data() {
     return {
-      cars: [{}],
       search: "",
     };
   },
 
   computed: {
-    ...mapState(["isUserLoggedIn", "user"]),
+    ...mapState(["isUserLoggedIn", "user", "cars"]),
   },
 
   mounted() {
@@ -96,7 +88,9 @@ export default {
     "$route.query.search": {
       immediate: true,
       async handler(value) {
-        this.cars = (await CarService.getCars(value)).data;
+        const cars = await CarService.getCars(value);
+        this.$store.dispatch("setCars", cars.data);
+        console.log(this.cars)
       },
     },
   },
@@ -118,21 +112,24 @@ export default {
 .container {
   flex-direction: row;
 }
-.user {
-  background-color: #2c3e50;
-  height: 210px;
-  width: 420px;
-  margin: 25px;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-  align-self: flex-start;
-}
 h1 {
   text-align: center;
 }
 h4 {
   padding: 5px;
+}
+.material-icons {
+  font-size: 30px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 10px;
+  color: #fff;
+  transition: 0.3s;
+}
+.material-icons:hover {
+  color: #901919;
+  cursor: pointer;
 }
 .main {
   min-width: 1100px;
@@ -154,19 +151,6 @@ h4 {
 .search input {
   margin: 0;
   width: 100%;
-}
-.material-icons {
-  font-size: 30px;
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-left: 10px;
-  color: #fff;
-  transition: 0.3s;
-}
-.material-icons:hover {
-  color: #901919;
-  cursor: pointer;
 }
 .add {
   align-self: end;
@@ -200,7 +184,7 @@ h4 {
     margin: 0;
   }
   .search {
-    width: 35%;
+    width: 45%;
     align-self: flex-start;
   }
   .material-icons {
